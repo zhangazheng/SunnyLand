@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
@@ -10,6 +11,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Text score;
     [SerializeField] private Transform cellingPoint;
     [SerializeField] private int jumpCount;
+    [SerializeField] private Transform deadLine;
     private int collectionCount;
     private Animator ani;
     private Rigidbody2D rb;
@@ -28,7 +30,7 @@ public class PlayerController : MonoBehaviour
     {
         Jump();
         Crouch();
-
+        Dead();
     }
     // Update is called once per frame
     void FixedUpdate()
@@ -66,6 +68,18 @@ public class PlayerController : MonoBehaviour
                 ani.SetBool("crouch", false);
             }
         }
+    }
+    void Dead()
+    {
+        if (transform.position.y < deadLine.position.y)
+        {
+            StartCoroutine(_Dead());
+        }
+    }
+    IEnumerator _Dead()
+    {
+        yield return new WaitForSeconds(1f);
+        SceneManager.LoadScene(0);
     }
     void Movement()
     {
@@ -129,12 +143,12 @@ public class PlayerController : MonoBehaviour
             else if(transform.position.x < collision.gameObject.transform.position.x)
             {
                 isHurt = true;
-                rb.velocity = new Vector2(-1, rb.velocity.y);
+                rb.velocity = new Vector2(-5, rb.velocity.y);
             }
             else if (transform.position.x > collision.gameObject.transform.position.x)
             {
                 isHurt = true;
-                rb.velocity = new Vector2(1, rb.velocity.y);
+                rb.velocity = new Vector2(5, rb.velocity.y);
             }
 
         }

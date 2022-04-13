@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour
     }
     void Jump()
     {
-        if (Input.GetButtonDown("Jump") && jumpCount > 1)
+        if (Input.GetButtonDown("Jump") && jumpCount > 1 && !isHurt)
         {
             rb.velocity = new Vector2(0, jumpForce * Time.fixedDeltaTime);
             ani.SetBool("jumping", true);
@@ -124,7 +124,7 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.CompareTag("Collection"))
         {
-            collision.gameObject.tag = "null";
+            collision.gameObject.tag = "Untagged";
             Destroy(collision.gameObject);
             collectionCount++;
             score.text = collectionCount + "";

@@ -120,8 +120,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 100
+  jumpForce: 200
   leftPoint: {fileID: 3845889356090069968}
   rightPoint: {fileID: 4588644187533303141}
+  ground:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!50 &1166452928
 Rigidbody2D:
   serializedVersion: 4
@@ -183,7 +187,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4138095112510196379}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.28, y: 0, z: 0}
+  m_LocalPosition: {x: -2.997, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3432679115607734259}
@@ -213,7 +217,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7041188856028293834}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.16, y: 0, z: 0}
+  m_LocalPosition: {x: 2.092, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3432679115607734259}

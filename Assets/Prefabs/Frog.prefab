@@ -119,7 +119,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afdf6041d30365e449de5c347efece1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deadLine: {fileID: 0}
+  deadAudio: {fileID: 8300000, guid: 67473b5508bbdf24f80e838966a2cc3a, type: 3}
+  dead: 0
   speed: 100
   jumpForce: 200
   leftPoint: {fileID: 3845889356090069968}

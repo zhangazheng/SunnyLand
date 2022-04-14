@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Text score;
     [SerializeField] private Transform cellingPoint;
     [SerializeField] private int jumpCount;
+    [SerializeField] private AudioClip jumpAudio, hurtAudio;
+    private AudioSource audioSource;
     private int collectionCount;
     private Animator ani;
     private Rigidbody2D rb;
@@ -24,7 +26,8 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<CircleCollider2D>();
         boxCol = GetComponent<BoxCollider2D>();
-    }
+        audioSource = GetComponent<AudioSource>();
+}
     void Update()
     {
         Jump();
@@ -46,6 +49,8 @@ public class PlayerController : MonoBehaviour
         {
             rb.velocity = new Vector2(0, jumpForce * Time.fixedDeltaTime);
             ani.SetBool("jumping", true);
+            audioSource.clip = jumpAudio;
+            audioSource.Play();
             jumpCount--;
         }
         if (col.IsTouchingLayers(ground))
@@ -124,20 +129,23 @@ public class PlayerController : MonoBehaviour
             ani.SetBool("falling", false);
         }
     }
+    // 收集物品
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Collection"))
         {
             collision.gameObject.tag = "Untagged";
-            Destroy(collision.gameObject);
+            collision.gameObject.GetComponent<Collection>().Collected();
             collectionCount++;
             score.text = collectionCount + "";
         }
     }
+    // 消灭敌人
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.CompareTag("Enemy"))
         {
+            collision.collider.gameObject.tag = "Untagged";
             if (ani.GetBool("falling"))
             {
                 Enemy_Base enemy = collision.gameObject.GetComponent<Enemy_Base>();
@@ -147,11 +155,15 @@ public class PlayerController : MonoBehaviour
             }
             else if(transform.position.x < collision.gameObject.transform.position.x)
             {
+                audioSource.clip = hurtAudio;
+                audioSource.Play();
                 isHurt = true;
                 rb.velocity = new Vector2(-5, rb.velocity.y);
             }
             else if (transform.position.x > collision.gameObject.transform.position.x)
             {
+                audioSource.clip = hurtAudio;
+                audioSource.Play();
                 isHurt = true;
                 rb.velocity = new Vector2(5, rb.velocity.y);
             }

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2394559721872187001}
   - component: {fileID: 2394559721872187006}
   - component: {fileID: 1599059683}
+  - component: {fileID: 1162064900}
   m_Layer: 0
   m_Name: Gem
   m_TagString: Collection
@@ -71,7 +72,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -937970547
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: bd59bf2e866ed4529ae645637eb9c11d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -129,3 +130,16 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.808658, y: 0.70513153}
   m_EdgeRadius: 0
+--- !u!114 &1162064900
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2394559721872187007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c1775a7384ebff428da0903ea9fa2a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clip: {fileID: 8300000, guid: fa57c107a07945240aa8058254c25db6, type: 3}

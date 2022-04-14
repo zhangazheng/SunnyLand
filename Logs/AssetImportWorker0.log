@@ -1,0 +1,19 @@
+Using pre-set license
+Built from '2020.3/china_unity/release' branch; Version is '2020.3.19f1c1 (d3d381ef40a9) revision 13882241'; Using compiler version '192528614'; Build Type 'Release'
+OS: 'Windows 10 Pro; OS build 19044.1620; Version 2009; 64bit' Language: 'zh' Physical Memory: 65217 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 0
+
+COMMAND LINE ARGUMENTS:
+C:\Program Files\Unity\Hub\Editor\2020.3.19f1c1\Editor\Unity.exe
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker0
+-projectPath
+D:/workspace/SunnyLand
+-logFile
+Logs/AssetImportWorker0.log
+-srvPort
+63288
+Successfully changed project path to: D:/workspace/SunnyLand

@@ -2,19 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy_Frog : MonoBehaviour
+public class Enemy_Frog : Enemy_Base
 {
     [SerializeField] private float speed, jumpForce;
     [SerializeField] private Transform leftPoint, rightPoint;
     [SerializeField] private LayerMask ground;
-    private Rigidbody2D rb;
     private bool faceLeft;
-    private Animator ani;
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-        ani = GetComponent<Animator>();
+        base.Start();
         transform.DetachChildren();
         // 离左边近，先向左移动
         if (Vector3.Distance(transform.position, leftPoint.position) < Vector3.Distance(transform.position, rightPoint.position))
@@ -24,10 +21,14 @@ public class Enemy_Frog : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    protected override void FixedUpdate()
     {
-        CheckPosition();
-        SwitchAnim();
+        base.FixedUpdate();
+        if(!dead)
+        {
+            CheckPositionAndMovement();
+            SwitchAnim();
+        }
     }
     public void Jump()
     {
@@ -37,7 +38,7 @@ public class Enemy_Frog : MonoBehaviour
             ani.SetBool("jump", true);
         }
     }
-    void CheckPosition()
+    void CheckPositionAndMovement()
     {
         if (faceLeft)
         {

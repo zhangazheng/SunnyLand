@@ -11,7 +11,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Text score;
     [SerializeField] private Transform cellingPoint;
     [SerializeField] private int jumpCount;
-    [SerializeField] private Transform deadLine;
     private int collectionCount;
     private Animator ani;
     private Rigidbody2D rb;
@@ -30,7 +29,7 @@ public class PlayerController : MonoBehaviour
     {
         Jump();
         Crouch();
-        Dead();
+        CheckDead();
     }
     // Update is called once per frame
     void FixedUpdate()
@@ -69,9 +68,9 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-    void Dead()
+    void CheckDead()
     {
-        if (transform.position.y < deadLine.position.y)
+        if (transform.position.y < SettingVariable.deadLine)
         {
             StartCoroutine(_Dead());
         }
@@ -141,10 +140,11 @@ public class PlayerController : MonoBehaviour
         {
             if (ani.GetBool("falling"))
             {
-                Destroy(collision.gameObject);
+                Enemy_Base enemy = collision.gameObject.GetComponent<Enemy_Base>();
+                enemy.Dead();
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce * Time.fixedDeltaTime);
                 ani.SetBool("jumping", true);
-            } 
+            }
             else if(transform.position.x < collision.gameObject.transform.position.x)
             {
                 isHurt = true;

@@ -987,7 +987,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 34.972458, y: -0.19137263, z: -10}
+  m_LocalPosition: {x: 35.007294, y: -0.1915214, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1124,7 +1124,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1699327605}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!483693784 &619757899
 TilemapRenderer:
@@ -1165,7 +1165,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -937970547
   m_SortingLayer: 3
-  m_SortingOrder: 0
+  m_SortingOrder: 3
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0.0625, y: 0.125, z: 0}
   m_MaxChunkCount: 16
@@ -1566,7 +1566,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1699327605}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &702800681
 BoxCollider2D:
@@ -1633,7 +1633,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -345806615
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 2.21875, y: 2.875, z: 0}
   m_MaxChunkCount: 16
@@ -1805,7 +1805,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 711592324}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 35, y: 2.81, z: -10}
+  m_LocalPosition: {x: 38.84, y: 0.6400001, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2022527205}
@@ -2114,7 +2114,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1081559505
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4859,8 +4859,8 @@ Transform:
   m_Children:
   - {fileID: 499990457}
   - {fileID: 1384681071}
-  - {fileID: 619757898}
   - {fileID: 702800680}
+  - {fileID: 619757898}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5108,7 +5108,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1938652422}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 35, y: 2.81, z: 0}
+  m_LocalPosition: {x: 38.84, y: 0.64, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1484723372}
@@ -5150,7 +5150,7 @@ MonoBehaviour:
     m_Bits: 64
   score: {fileID: 696401221}
   cellingPoint: {fileID: 1484723372}
-  jumpCount: 0
+  jumpCount: 2
   jumpAudio: {fileID: 8300000, guid: 5efa41faebe12634db9ffad659cb294c, type: 3}
   hurtAudio: {fileID: 8300000, guid: 0c9ec263ca7bca04993801fb15945631, type: 3}
 --- !u!95 &1938652428
@@ -5646,6 +5646,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 113022251}
     m_Modifications:
+    - target: {fileID: 1181200640, guid: 74592165a08fafb41b52613f92581765, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -47.05
+      objectReference: {fileID: 0}
     - target: {fileID: 8631690854936302457, guid: 74592165a08fafb41b52613f92581765, type: 3}
       propertyPath: m_RootOrder
       value: 4

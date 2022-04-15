@@ -7,14 +7,18 @@ public class Enemy_Frog : Enemy_Base
     [SerializeField] private float speed, jumpForce;
     [SerializeField] private Transform leftPoint, rightPoint;
     [SerializeField] private LayerMask ground;
+    private float leftX, rightX;
     private bool faceLeft;
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
-        transform.DetachChildren();
+        leftX = leftPoint.position.x;
+        rightX = rightPoint.position.x;
+        Destroy(leftPoint.gameObject);
+        Destroy(rightPoint.gameObject);
         // 离左边近，先向左移动
-        if (Vector3.Distance(transform.position, leftPoint.position) < Vector3.Distance(transform.position, rightPoint.position))
+        if (Mathf.Abs(transform.position.x - leftX) < Mathf.Abs(transform.position.x - rightX))
         {
             faceLeft = true;
         }
@@ -43,7 +47,7 @@ public class Enemy_Frog : Enemy_Base
         if (faceLeft)
         {
             rb.velocity = new Vector2(-speed * Time.fixedDeltaTime, rb.velocity.y);
-            if (transform.position.x < leftPoint.position.x)
+            if (transform.position.x < leftX)
             {
                 transform.localScale = new Vector3(-1, 1, 1);
                 rb.velocity = new Vector2(speed * Time.fixedDeltaTime, rb.velocity.y);
@@ -53,7 +57,7 @@ public class Enemy_Frog : Enemy_Base
         else
         {
             rb.velocity = new Vector2(speed * Time.fixedDeltaTime, rb.velocity.y);
-            if (transform.position.x > rightPoint.position.x)
+            if (transform.position.x > rightX)
             {
                 transform.localScale = new Vector3(1, 1, 1);
                 rb.velocity = new Vector2(-speed * Time.fixedDeltaTime, rb.velocity.y);

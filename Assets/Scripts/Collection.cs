@@ -8,6 +8,11 @@ public class Collection : MonoBehaviour
     public void Collected()
     {
         AudioSource.PlayClipAtPoint(clip, transform.position);
+        GetComponent<Animator>().SetTrigger("got");
+    }
+    void Death()
+    {
         Destroy(gameObject);
     }
+
 }

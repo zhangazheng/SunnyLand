@@ -9,16 +9,17 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float speed, jumpForce;
     [SerializeField] private LayerMask ground;
     [SerializeField] private Text score;
-    [SerializeField] private Transform cellingPoint;
+    [SerializeField] private Transform cellingPoint, footPoint;
     [SerializeField] private int jumpCount;
     [SerializeField] private AudioClip jumpAudio, hurtAudio;
+    [SerializeField] private bool isHurt;
     private AudioSource audioSource;
     private int collectionCount;
     private Animator ani;
     private Rigidbody2D rb;
     private CircleCollider2D col;
     private BoxCollider2D boxCol;
-    [SerializeField] private bool isHurt;
+    [SerializeField]private bool jumpPressed,isOnGround, isJumped;
     private int hurtFrameCount = SettingVariable.hurtFrame;
     // Start is called before the first frame update
     void Start()
@@ -32,32 +33,41 @@ public class PlayerController : MonoBehaviour
 }
     void Update()
     {
-        Jump();
+        if (Input.GetButtonDown("Jump") && jumpCount >0 && !isHurt)
+        {
+            jumpPressed = true;
+        }
         Crouch();
         CheckDead();
     }
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(!isHurt)
+        isOnGround = Physics2D.OverlapCircle(footPoint.position, 0.2f, ground);
+        if (!isHurt)
         {
             Movement();
         }
         SwitchAnim();
+        Jump();
+        
     }
     void Jump()
     {
-        if (Input.GetButtonDown("Jump") && jumpCount > 1 && !isHurt)
+        if (isOnGround && !isJumped)
+        {
+            jumpCount = SettingVariable.jumpCount;
+        }
+        if (jumpCount <= 0) jumpPressed = false;
+        if (jumpPressed && jumpCount > 0)
         {
             rb.velocity = new Vector2(0, jumpForce * Time.fixedDeltaTime);
             ani.SetBool("jumping", true);
             audioSource.clip = jumpAudio;
             audioSource.Play();
             jumpCount--;
-        }
-        if (col.IsTouchingLayers(ground))
-        {
-            jumpCount = 2;
+            jumpPressed = false;
+            isJumped = true;
         }
     }
     void Crouch()
@@ -129,8 +139,9 @@ public class PlayerController : MonoBehaviour
         } 
         else
         {
-            if (rb.velocity.y < 0.1f && !col.IsTouchingLayers(ground))
+            if (rb.velocity.y < 0.1f && !isOnGround)
             {
+                isJumped = false;
                 ani.SetBool("jumping", false);
                 ani.SetBool("falling", true);
             }
@@ -138,11 +149,12 @@ public class PlayerController : MonoBehaviour
             {
                 if (rb.velocity.y < 0)
                 {
+                    isJumped = false;
                     ani.SetBool("jumping", false);
                     ani.SetBool("falling", true);
                 }
             }
-            else if (col.IsTouchingLayers(ground))
+            else if (isOnGround)
             {
                 ani.SetBool("falling", false);
             }

@@ -25,7 +25,7 @@ public class EnterDoorDialog : MonoBehaviour
     {
         if (dialog.activeSelf && Input.GetKeyDown(KeyCode.E))
         {
-            SceneManager.LoadScene(1);
+            SceneManager.LoadScene(2);
         }
     }
 }

@@ -18,7 +18,8 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     private CircleCollider2D col;
     private BoxCollider2D boxCol;
-    private bool isHurt;
+    [SerializeField] private bool isHurt;
+    private int hurtFrameCount = SettingVariable.hurtFrame;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +28,7 @@ public class PlayerController : MonoBehaviour
         col = GetComponent<CircleCollider2D>();
         boxCol = GetComponent<BoxCollider2D>();
         audioSource = GetComponent<AudioSource>();
+        hurtFrameCount = SettingVariable.hurtFrame;
 }
     void Update()
     {
@@ -100,33 +102,50 @@ public class PlayerController : MonoBehaviour
             transform.localScale = new Vector3(face, 1, 1);
         }
     }
+    IEnumerator Hurt()
+    {
+        //判断伤害帧数
+        if(hurtFrameCount > 0)
+        {
+            ani.SetBool("hurt", true);
+            ani.SetFloat("running", 0);
+            hurtFrameCount--;
+            yield return null;
+        }
+        if (hurtFrameCount == 0)
+        {
+            isHurt = false;
+            ani.SetBool("hurt", false);
+            hurtFrameCount = SettingVariable.hurtFrame;
+            yield break;
+        }
+
+    }
     void SwitchAnim()
     {
-        if (rb.velocity.y < 0.1f && !col.IsTouchingLayers(ground))
+        if (isHurt)
         {
-            ani.SetBool("jumping", false);
-            ani.SetBool("falling", true);
-        }
-        if (ani.GetBool("jumping"))
+            StartCoroutine(Hurt());
+        } 
+        else
         {
-            if(rb.velocity.y < 0)
+            if (rb.velocity.y < 0.1f && !col.IsTouchingLayers(ground))
             {
                 ani.SetBool("jumping", false);
                 ani.SetBool("falling", true);
             }
-        } else if (isHurt)
-        {
-            ani.SetBool("hurt", true);
-            ani.SetFloat("running", 0);
-            if (Mathf.Abs(rb.velocity.x) < 0.1f)
+            if (!isHurt && ani.GetBool("jumping"))
             {
-                isHurt = false;
-                ani.SetBool("hurt", false);
+                if (rb.velocity.y < 0)
+                {
+                    ani.SetBool("jumping", false);
+                    ani.SetBool("falling", true);
+                }
             }
-        }
-        else if (col.IsTouchingLayers(ground))
-        {
-            ani.SetBool("falling", false);
+            else if (col.IsTouchingLayers(ground))
+            {
+                ani.SetBool("falling", false);
+            }
         }
     }
     // 收集物品
@@ -143,31 +162,36 @@ public class PlayerController : MonoBehaviour
     // 消灭敌人
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.collider.CompareTag("Enemy"))
+        if(!isHurt)
         {
-            collision.collider.gameObject.tag = "Untagged";
-            if (ani.GetBool("falling"))
+            if (collision.collider.CompareTag("Enemy"))
             {
-                Enemy_Base enemy = collision.gameObject.GetComponent<Enemy_Base>();
-                enemy.Dead();
-                rb.velocity = new Vector2(rb.velocity.x, jumpForce * Time.fixedDeltaTime);
-                ani.SetBool("jumping", true);
-            }
-            else if(transform.position.x < collision.gameObject.transform.position.x)
-            {
-                audioSource.clip = hurtAudio;
-                audioSource.Play();
-                isHurt = true;
-                rb.velocity = new Vector2(-5, rb.velocity.y);
-            }
-            else if (transform.position.x > collision.gameObject.transform.position.x)
-            {
-                audioSource.clip = hurtAudio;
-                audioSource.Play();
-                isHurt = true;
-                rb.velocity = new Vector2(5, rb.velocity.y);
-            }
+                if (ani.GetBool("falling"))
+                {
+                    collision.collider.gameObject.tag = "Untagged";
+                    Enemy_Base enemy = collision.gameObject.GetComponent<Enemy_Base>();
+                    enemy.Dead();
+                    rb.velocity = new Vector2(rb.velocity.x, jumpForce * Time.fixedDeltaTime);
+                    ani.SetBool("jumping", true);
+                }
+                else if (transform.position.x < collision.gameObject.transform.position.x)
+                {
+                    audioSource.clip = hurtAudio;
+                    audioSource.Play();
+                    hurtFrameCount = SettingVariable.hurtFrame;
+                    isHurt = true;
+                    rb.velocity = new Vector2(-5, rb.velocity.y);
+                }
+                else if (transform.position.x > collision.gameObject.transform.position.x)
+                {
+                    audioSource.clip = hurtAudio;
+                    audioSource.Play();
+                    hurtFrameCount = SettingVariable.hurtFrame;
+                    isHurt = true;
+                    rb.velocity = new Vector2(5, rb.velocity.y);
+                }
 
+            }
         }
     }
 }
